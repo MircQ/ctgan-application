@@ -37,7 +37,7 @@ class ModelService:
 
         model.fit(train_data=data, discrete_columns=self.discrete_columns)
 
-    def generate(self, samples: int):
+    def generate(self, samples: int) -> DataFrame:
 
         """
         Generate samples samples using the current model.
@@ -50,3 +50,4 @@ class ModelService:
 
         synthetic_data = self.model.sample(n=samples)
 
+        return synthetic_data

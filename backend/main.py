@@ -7,7 +7,9 @@ from resources import TrainingResource, GenerationResource
 
 if __name__ == "__main__":
 
-    app = FastAPI()
+    app = FastAPI(
+        title="CTGAN application"
+    )
 
     app.include_router(router=TrainingResource.router)
     app.include_router(router=GenerationResource.router)
