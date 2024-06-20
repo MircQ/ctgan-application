@@ -8,7 +8,8 @@ from resources import TrainingResource, GenerationResource
 if __name__ == "__main__":
 
     app = FastAPI(
-        title="CTGAN application"
+        title="CTGAN application",
+        docs_url="/apidocs"
     )
 
     app.include_router(router=TrainingResource.router)

@@ -10,25 +10,11 @@ router = APIRouter(
 
 
 @router.post(
-    path="/train",
-    summary="",
-    description=""
+    path="/train/{model}",
+    summary="Train a model",
+    description="Train the given model using the data passed as parameter"
 )
 def train(model: Literal["CTGAN", "TVAE"], data):
 
-    ModelService().train()
+    ModelService().train(model=model, data=data)
 
-    discrete_columns = [
-        'workclass',
-        'education',
-        'marital-status',
-        'occupation',
-        'relationship',
-        'race',
-        'sex',
-        'native-country',
-        'income'
-    ]
-
-    ctgan = CTGAN(epochs=10)
-    ctgan.fit(real_data, discrete_columns)

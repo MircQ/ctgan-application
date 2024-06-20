@@ -1,6 +1,9 @@
 from ctgan import CTGAN, TVAE
 from pandas import DataFrame
-
+from sdv.evaluation.single_table import evaluate_quality
+from sdv.evaluation.single_table import get_column_plot
+from sdv.single_table import CTGANSynthesizer
+from sdv.metadata import SingleTableMetadata
 
 class ModelService:
 
@@ -37,6 +40,12 @@ class ModelService:
 
         model.fit(train_data=data, discrete_columns=self.discrete_columns)
 
+        # or
+        metadata = SingleTableMetadata()
+        metadata.detect_from_dataframe(data=data)
+        synthesizer = CTGANSynthesizer(metadata)
+        synthesizer.fit(data=data)
+
     def generate(self, samples: int) -> DataFrame:
 
         """
@@ -50,4 +59,25 @@ class ModelService:
 
         synthetic_data = self.model.sample(n=samples)
 
+        # or
+        # synthetic_data = synthesizer.sample(num_rows=10)
+
         return synthetic_data
+
+    def evaluate(self, real_data, synthetic_data, metadata):
+
+        quality_report = evaluate_quality(
+            real_data,
+            synthetic_data,
+            metadata)
+
+
+
+        fig = get_column_plot(
+            real_data=real_data,
+            synthetic_data=synthetic_data,
+            column_name='amenities_fee',
+            metadata=metadata
+        )
+
+        fig.show()

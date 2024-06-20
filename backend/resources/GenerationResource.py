@@ -15,7 +15,7 @@ router = APIRouter(
     summary="Generate new samples",
     description="Generate new samples from th current model."
 )
-def generate(samples: int):
+def generate(samples: int) -> Response:
 
     synthetic_data = ModelService().generate(samples=samples)
 
