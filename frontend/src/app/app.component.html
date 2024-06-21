@@ -1,0 +1,80 @@
+<section>
+  <h3>Training</h3>
+  <mat-stepper [linear]="true" #trainingStepper>
+    <mat-step [stepControl]="modelFormGroup">
+      <form [formGroup]="modelFormGroup">
+        <ng-template matStepLabel>Select the name of the model to train</ng-template>
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+          <mat-select required>
+              @for (model of models; track model) {
+                <mat-option [value]="model">{{model}}</mat-option>
+              }
+          </mat-select>
+          <mat-error>Please select a model</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="dataFormGroup">
+      <form [formGroup]="dataFormGroup">
+        <ng-template matStepLabel>Upload the data</ng-template>
+        <mat-form-field>
+          <mat-label>Number of samples</mat-label>
+          <input matInput placeholder="Number of samples" formControlName="samplesCtrl" type="number" min="1" required>
+          <mat-error>Please enter a number greater than 1</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Train</ng-template>
+      <p>Click the Train button to train the model using the given data.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="trainingStepper.reset()">Generate</button>
+        <button mat-button (click)="onTrainingClick()">Train</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</section>
+<mat-divider></mat-divider>
+<section>
+  <h3>Generation</h3>
+  <mat-stepper [linear]="true" #generationStepper>
+    <mat-step [stepControl]="samplesFormGroup">
+      <form [formGroup]="samplesFormGroup">
+        <ng-template matStepLabel>Insert the number of samples to generate</ng-template>
+        <mat-form-field>
+          <mat-label>Number of samples</mat-label>
+          <input matInput placeholder="Number of samples" formControlName="samplesCtrl" type="number" min="1" required>
+          <mat-error>Please enter a number greater than 1</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Generate</ng-template>
+      <p>Click the Generate button to generate the samples.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onGenerateClick()">Generate</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</section>
+<mat-divider></mat-divider>
+<section>
+  <h3>Evaluation</h3>
+  <mat-label>Click the button to evaluate the latest generated samples</mat-label><br>
+  <button mat-flat-button>Evaluate</button>
+</section>
+
+
+
