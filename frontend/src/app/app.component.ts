@@ -58,11 +58,15 @@ export class AppComponent {
 
   // Evaluation form
 
+  evaluationFormGroup = this._formBuilderTraining.group({
+    evaluationCtrl: ['workclass', Validators.required, ],
+  });
+
   syntheticData: File 
-  syntheticDataFileName: string | null = null;
+  syntheticDataFileName: string
 
   realData: File
-  realDataFileName: ?string
+  realDataFileName: string
 
   constructor(
     private _formBuilderGeneration: FormBuilder, 
@@ -107,37 +111,33 @@ export class AppComponent {
   }
 
   onTrainClick(){
-
-    const model = this.modelFormGroup.value.modelsCtrl;
-
-    if (model != undefined && model != null && this.trainingData != null ){
-      this._backendService.train(model, this.trainingData).subscribe((res) => {
+  
+    this._backendService.train(this.modelFormGroup.value.modelsCtrl!, this.trainingData!)
+      .subscribe((res) => {
         console.log("OK")
-      })
-    }
+      }
+    );
   }
 
   onGenerateClick(){
-    const n_samples_str = this.samplesFormGroup.value?.samplesCtrl
 
-    if (n_samples_str != null && n_samples_str != undefined){
-      const n_samples = parseInt(n_samples_str)
-
-      this._backendService.generate(n_samples).subscribe((data) => {
+    this._backendService.generate(parseInt(this.samplesFormGroup.value?.samplesCtrl!))
+      .subscribe((data: ArrayBuffer) => {
         
         const blob = new Blob([data], { type: 'application/text-csv' });
         saveAs(blob, "samples.csv");
         
-      });
-
-      this._backendService.generate(n_samples)
-    }
+      }
+    );
   }
 
   onEvaluateClick(){
 
-    this._backendService.evaluate()
-
-    if (this.syntheticData != undefined)
+    this._backendService.evaluate(this.evaluationFormGroup.value?.evaluationCtrl!, this.syntheticData!, this.realData!)
+      .subscribe((data: ArrayBuffer) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        saveAs(blob, "evaluation.pdf");
+      }
+    );
   }
 }

@@ -1,9 +1,6 @@
 import io
-
 from fastapi import APIRouter
-from fastapi.responses import FileResponse
 from starlette.responses import Response
-import pandas as pd
 from services.ModelService import ModelService
 
 generation_router = APIRouter(

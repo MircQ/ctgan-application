@@ -69,24 +69,38 @@
   <mat-stepper [linear]="true" #evaluationStepper>
     <mat-step>
       <ng-template matStepLabel>Upload the real data</ng-template>
-      <input type="file" class="file-upload" accept=".csv" (change)="onFileSelected($event)">
+      <input type="file" class="file-upload" accept=".csv" (change)="onRealDataFileSelected($event)">
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Upload the synthetic data</ng-template>
-      <input type="file" class="file-upload" accept=".csv" (change)="onFileSelected($event, 'synthetic')">
+      <input type="file" class="file-upload" accept=".csv" (change)="onSyntheticDataFileSelected($event)">
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
+    </mat-step><mat-step [stepControl]="evaluationFormGroup">
+      <form [formGroup]="evaluationFormGroup">
+        <ng-template matStepLabel>Insert the name of column to evaluate</ng-template>
+        <mat-form-field>
+          <mat-label>Column name</mat-label>
+          <input matInput placeholder="Column name" formControlName="evaluationCtrl" type="text" required>
+          <mat-error>Please enter the name of the column</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
     </mat-step>
     <mat-step>
+      <ng-template matStepLabel>Evaluate</ng-template>
+      <p>Click the Evaluate button to generate the samples.</p>
       <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="evaluateStepper.reset()">Reset</button>
-      <button mat-button (click)="onEvaluateClick()">Train</button>
-    </div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="evaluationStepper.reset()">Reset</button>
+        <button mat-button (click)="onEvaluateClick()">Evaluate</button>
+      </div>
     </mat-step>
     
   </mat-stepper>
