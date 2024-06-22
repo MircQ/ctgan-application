@@ -6,7 +6,11 @@ starlette==0.37.2
 
 
 sdv==1.14.0
+pandas==2.2.2
 
+pymupdf==1.24.5
 
-#ctgan==0.10.1
+pydantic==2.7.4
+pydantic-settings==2.3.3
 
+kaleido==0.2.1  # Exporting plotly images

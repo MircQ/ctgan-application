@@ -18,26 +18,20 @@
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="dataFormGroup">
-      <form [formGroup]="dataFormGroup">
-        <ng-template matStepLabel>Upload the data</ng-template>
-        <mat-form-field>
-          <mat-label>Number of samples</mat-label>
-          <input matInput placeholder="Number of samples" formControlName="samplesCtrl" type="number" min="1" required>
-          <mat-error>Please enter a number greater than 1</mat-error>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
+    <mat-step>
+      <ng-template matStepLabel>Upload the training data</ng-template>
+      <input type="file" class="file-upload" accept=".csv" (change)="onTrainingDataFileSelected($event)">
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Train</ng-template>
       <p>Click the Train button to train the model using the given data.</p>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="trainingStepper.reset()">Generate</button>
-        <button mat-button (click)="onTrainingClick()">Train</button>
+        <button mat-button (click)="trainingStepper.reset()">Reset</button>
+        <button mat-button (click)="onTrainClick()">Train</button>
       </div>
     </mat-step>
   </mat-stepper>
@@ -72,8 +66,31 @@
 <mat-divider></mat-divider>
 <section>
   <h3>Evaluation</h3>
-  <mat-label>Click the button to evaluate the latest generated samples</mat-label><br>
-  <button mat-flat-button>Evaluate</button>
+  <mat-stepper [linear]="true" #evaluationStepper>
+    <mat-step>
+      <ng-template matStepLabel>Upload the real data</ng-template>
+      <input type="file" class="file-upload" accept=".csv" (change)="onFileSelected($event)">
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Upload the synthetic data</ng-template>
+      <input type="file" class="file-upload" accept=".csv" (change)="onFileSelected($event, 'synthetic')">
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="evaluateStepper.reset()">Reset</button>
+      <button mat-button (click)="onEvaluateClick()">Train</button>
+    </div>
+    </mat-step>
+    
+  </mat-stepper>
+  
 </section>
 
 

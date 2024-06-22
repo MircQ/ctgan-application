@@ -1,16 +1,17 @@
 import io
 
 from fastapi import APIRouter
+from fastapi.responses import FileResponse
 from starlette.responses import Response
-
+import pandas as pd
 from services.ModelService import ModelService
 
-router = APIRouter(
+generation_router = APIRouter(
     tags=["Generation"]
 )
 
 
-@router.post(
+@generation_router.get(
     path="/generate",
     summary="Generate new samples",
     description="Generate new samples from th current model."
@@ -21,6 +22,14 @@ def generate(samples: int) -> Response:
 
     buffer = io.BytesIO()
 
-    synthetic_data.to_csv(path_or_buf=buffer)
+    # Writing dataframe into the buffer
+    synthetic_data.to_csv(path_or_buf=buffer, index=False)
+    
+    # Set buffer cursor to the initial position
+    buffer.seek(0)
 
-    return Response(content=buffer)
+    return Response(
+        content=buffer.read(),
+        media_type="text/csv",
+        headers={'Content-Disposition': 'attachment; filename="samples.csv"'}
+    )

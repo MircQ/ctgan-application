@@ -1,20 +1,31 @@
+import io
 from typing import Literal
 
-from fastapi import APIRouter
+import pandas as pd
+from fastapi import APIRouter, UploadFile
 
 from services.ModelService import ModelService
 
-router = APIRouter(
+training_router = APIRouter(
     tags=["Training"]
 )
 
 
-@router.post(
+@training_router.post(
     path="/train/{model}",
     summary="Train a model",
     description="Train the given model using the data passed as parameter"
 )
-def train(model: Literal["CTGAN", "TVAE"], data):
+async def train(model: Literal["CTGAN", "TVAE"], file: UploadFile):
 
-    ModelService().train(model=model, data=data)
+    # Reading file as bytes
+    buffer = await file.read()
+
+    # Convert into file-like object
+    data = io.BytesIO(buffer)
+
+    # Converting file into dataframe
+    df = pd.read_csv(filepath_or_buffer=data)
+
+    ModelService().train(model=model, data=df)
 

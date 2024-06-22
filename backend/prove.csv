@@ -1,0 +1,11 @@
+age,workclass,fnlwgt,education,education-num,marital-status,occupation,relationship,race,sex,capital-gain,capital-loss,hours-per-week,native-country,income
+38, Federal-gov,519244, Prof-school,9, Divorced, Other-service, Husband, White, Male,0,0,40, United-States, >50K
+67, ?,212039, 1st-4th,4, Married-civ-spouse, Prof-specialty, Wife, White, Male,24,0,40, Mexico, <=50K
+70, Private,156511, Some-college,7, Never-married, Priv-house-serv, Own-child, White, Female,23,0,60, United-States, <=50K
+70, Private,253614, HS-grad,15, Married-civ-spouse, Adm-clerical, Own-child, White, Male,20,0,47, United-States, <=50K
+35, Private,193088, Masters,4, Married-civ-spouse, Machine-op-inspct, Not-in-family, White, Female,0,0,52, United-States, >50K
+35, Self-emp-inc,245287, 7th-8th,4, Married-civ-spouse, Priv-house-serv, Not-in-family, White, Male,0,0,40, United-States, <=50K
+77, State-gov,287189, Some-college,11, Never-married, Handlers-cleaners, Own-child, White, Male,0,4,40, Mexico, <=50K
+84, Private,560542, Bachelors,4, Never-married, Sales, Husband, White, Female,0,0,40, United-States, <=50K
+22, Without-pay,177616, HS-grad,7, Married-civ-spouse, Farming-fishing, Own-child, Other, Male,1,0,40, United-States, <=50K
+58, Private,444952, Assoc-voc,15, Widowed, Adm-clerical, Husband, White, Male,29,0,40, United-States, <=50K
