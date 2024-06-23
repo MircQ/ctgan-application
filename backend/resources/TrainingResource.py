@@ -16,7 +16,7 @@ training_router = APIRouter(
     summary="Train a model",
     description="Train the given model using the data passed as parameter"
 )
-async def train(model: Literal["CTGAN", "TVAE"], file: UploadFile):
+async def train(model: Literal["CTGAN", "TVAE"], file: UploadFile) -> str:
 
     # Reading file as bytes
     buffer = await file.read()
@@ -27,5 +27,8 @@ async def train(model: Literal["CTGAN", "TVAE"], file: UploadFile):
     # Converting file into dataframe
     df = pd.read_csv(filepath_or_buffer=data)
 
+    # Model training
     ModelService().train(model=model, data=df)
+
+    return "Model correctly trained"
 

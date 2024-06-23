@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
-import {FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl} from '@angular/forms';
+import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -11,6 +11,7 @@ import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import { BackendService } from './services/backend.service';
 import {saveAs} from "file-saver";
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ import {saveAs} from "file-saver";
     MatInputModule, 
     MatOptionModule, 
     MatSelectModule,
+    MatSnackBarModule
   ],
 })
 export class AppComponent {
@@ -71,8 +73,13 @@ export class AppComponent {
   constructor(
     private _formBuilderGeneration: FormBuilder, 
     private _formBuilderTraining: FormBuilder,
-    private _backendService: BackendService
+    private _backendService: BackendService,
+    private _snackBar: MatSnackBar
   ) {}
+
+  openSnackBar(message: string, action: string, config: any) {
+    this._snackBar.open(message, action, config);
+  }
 
   onTrainingDataFileSelected(event: any) {
 
@@ -114,7 +121,9 @@ export class AppComponent {
   
     this._backendService.train(this.modelFormGroup.value.modelsCtrl!, this.trainingData!)
       .subscribe((res) => {
-        console.log("OK")
+        this.openSnackBar("Training completed", "Dismiss", {
+          duration: 3000
+        })
       }
     );
   }

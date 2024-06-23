@@ -8,9 +8,9 @@ starlette==0.37.2
 sdv==1.14.0
 pandas==2.2.2
 
-pymupdf==1.24.5
+pymupdf==1.24.5     # PDF creation
 
-pydantic==2.7.4
-pydantic-settings==2.3.3
+pydantic==2.7.4     # Schemas management
+pydantic-settings==2.3.3    # Env variables management
 
 kaleido==0.2.1  # Exporting plotly images

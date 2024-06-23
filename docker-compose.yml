@@ -1,0 +1,15 @@
+version: '3'
+services:
+  ctgan-frontend:
+    build: ./frontend
+    environment:
+      BACKEND_URL: 3000
+      BACKEND_PORT: http://playground-web-backend:8080/
+    ports:
+      - 4200:4200
+  ctgan-backend:
+    build: ./backend
+    environment:
+      PORT: 4201
+    ports:
+      - 4201:4201

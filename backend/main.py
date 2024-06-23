@@ -27,5 +27,4 @@ if __name__ == "__main__":
         allow_headers=["*"],
     )
 
-    #uvicorn.run(app=app, host='0.0.0.0', port=4557)
-    uvicorn.run(app=app, host='localhost', port=CONFIG.PORT)
+    uvicorn.run(app=app, host='0.0.0.0', port=CONFIG.PORT)
