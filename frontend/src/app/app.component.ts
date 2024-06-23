@@ -75,7 +75,9 @@ export class AppComponent {
     private _formBuilderTraining: FormBuilder,
     private _backendService: BackendService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) {
+    
+  }
 
   openSnackBar(message: string, action: string, config: any) {
     this._snackBar.open(message, action, config);
@@ -118,11 +120,17 @@ export class AppComponent {
   }
 
   onTrainClick(){
+    this.openSnackBar("Starting training process", "Dismiss", {
+      duration: 5000
+    })
   
     this._backendService.train(this.modelFormGroup.value.modelsCtrl!, this.trainingData!)
-      .subscribe((res) => {
-        this.openSnackBar("Training completed", "Dismiss", {
-          duration: 3000
+      .subscribe({
+        next: (res) => this.openSnackBar("Training completed", "Dismiss", {
+          duration: 5000
+        }),
+        error: (err) => this.openSnackBar("An error occurred", "Dismiss", {
+          duration: 5000
         })
       }
     );
@@ -131,11 +139,14 @@ export class AppComponent {
   onGenerateClick(){
 
     this._backendService.generate(parseInt(this.samplesFormGroup.value?.samplesCtrl!))
-      .subscribe((data: ArrayBuffer) => {
-        
-        const blob = new Blob([data], { type: 'application/text-csv' });
-        saveAs(blob, "samples.csv");
-        
+      .subscribe({
+        next: (data: ArrayBuffer) => {
+          const blob = new Blob([data], { type: 'application/text-csv' });
+          saveAs(blob, "samples.csv");
+        },
+        error: (err) => this.openSnackBar("An error occurred", "Dismiss", {
+          duration: 5000
+        })
       }
     );
   }
@@ -143,9 +154,14 @@ export class AppComponent {
   onEvaluateClick(){
 
     this._backendService.evaluate(this.evaluationFormGroup.value?.evaluationCtrl!, this.syntheticData!, this.realData!)
-      .subscribe((data: ArrayBuffer) => {
-        const blob = new Blob([data], { type: 'application/pdf' });
-        saveAs(blob, "evaluation.pdf");
+      .subscribe({
+        next: (data: ArrayBuffer) => {
+          const blob = new Blob([data], { type: 'application/pdf' });
+          saveAs(blob, "evaluation.pdf");
+        },
+        error: (err) => this.openSnackBar("An error occurred", "Dismiss", {
+          duration: 5000
+        }) 
       }
     );
   }

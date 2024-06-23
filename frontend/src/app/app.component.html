@@ -29,8 +29,6 @@
       <ng-template matStepLabel>Train</ng-template>
       <p>Click the Train button to train the model using the given data.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="trainingStepper.reset()">Reset</button>
         <button mat-button (click)="onTrainClick()">Train</button>
       </div>
     </mat-step>
@@ -57,7 +55,6 @@
       <ng-template matStepLabel>Generate</ng-template>
       <p>Click the Generate button to generate the samples.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="onGenerateClick()">Generate</button>
       </div>
     </mat-step>
@@ -97,8 +94,6 @@
       <ng-template matStepLabel>Evaluate</ng-template>
       <p>Click the Evaluate button to generate the samples.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="evaluationStepper.reset()">Reset</button>
         <button mat-button (click)="onEvaluateClick()">Evaluate</button>
       </div>
     </mat-step>

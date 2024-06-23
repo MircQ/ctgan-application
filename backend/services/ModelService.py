@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pandas import DataFrame
 from sdv.evaluation.single_table import evaluate_quality
 from sdv.evaluation.single_table import get_column_plot
@@ -7,6 +9,7 @@ from utils.PDFManager import PDFManager
 from utils.Singleton import Singleton
 import pandas as pd
 
+
 class ModelService(metaclass=Singleton):
 
     # This variable will store the last trained model.
@@ -15,14 +18,14 @@ class ModelService(metaclass=Singleton):
     # This variable will store the last 
     metadata: SingleTableMetadata | None = None
 
-    training_data: pd.DataFrame | None = None
+    def train(self, model: Literal["CTGAN", "TVAE"], data: DataFrame):
 
-    def train(self, model: str, data: DataFrame):
+        """
+        Train the model with the given data.
 
-        # TODO validate data
-        # Continuous data must be represented as floats
-        # Discrete data must be represented as ints or strings
-        # The data should not contain any missing values
+        :param str model: model name. One between CTGAN and TVAE.
+        :param DataFrame data: data on which the model will be trained.
+        """
 
         print(f"Starting training function: model {model}")
 
@@ -32,9 +35,9 @@ class ModelService(metaclass=Singleton):
         match model:
 
             case "CTGAN":
-                self.synthesizer = CTGANSynthesizer(metadata=metadata, epochs=3)
+                self.synthesizer = CTGANSynthesizer(metadata=metadata, epochs=5)
             case "TVAE":
-                self.synthesizer = TVAESynthesizer(metadata=metadata, epochs=10)
+                self.synthesizer = TVAESynthesizer(metadata=metadata, epochs=5)
             case _:
                 raise Exception
 

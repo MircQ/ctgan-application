@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { environment } from '../../environment/environment.template';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +12,7 @@ import { environment } from '../../environment/environment.template';
 )
 export class BackendService {
 
-    BASE_URL = environment.API_URL
+    BASE_URL = "http://localhost:4201"
 
     constructor(
         private http: HttpClient) { 
