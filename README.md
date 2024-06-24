@@ -79,11 +79,17 @@ In order to use the application, simply connect to http://localhost:4200.
 
 In order to use the Swagger, simply connect to http://localhost:4201/apidocs.
 
-In case you are using the UI, at the end of the training of a model, you will be notified by a snackbar notification. In
+In case you are using the UI, the start and the end of the training of a model will be notified by a snackbar notification. In
 order to reduce the waiting time, the number of epochs for which a model is trained has been reduced.
 
 In case you are using the Swagger, you can directly upload the files from the Swagger interface as well as download the
 results.
+
+*ctgan-backend* exposes three APIs:
+
+- */train*,  which trains a model using the given data
+- */generate*, which generate synthetic data using the previously trained model and download the generated data into a .csv file
+- */evaluate*, which generates an evaluation report given a column and downloads the report in .pdf format
 
 
 ## Known Issues and Limitations
@@ -94,5 +100,6 @@ know issues, limitations and possible improvements:
 - number of epochs for which the model is trained has been reduced in order to improve the user experience.
 - environment variables management on client side is missing, meaning that always the same ports will be exposed.
 - communication between containers can be improved. At the moment, containers use the port exposed on the hosting machine to communicate because of CORS policy reasons (ideally, they can communicate directly using the Docker network).
-- 
-
+- CSS part has been voluntarily neglected
+- *ctgan-backend*'s performances have not been improved by using Python compilers such as Nuitka
+- synthetic data generation is performed using the last trained model

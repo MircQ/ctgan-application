@@ -1,3 +1,4 @@
+import logging
 from typing import Literal
 
 from pandas import DataFrame
@@ -27,7 +28,7 @@ class ModelService(metaclass=Singleton):
         :param DataFrame data: data on which the model will be trained.
         """
 
-        print(f"Starting training function: model {model}")
+        logging.info(f"Starting training function: model {model}")
 
         metadata = SingleTableMetadata()
         metadata.detect_from_dataframe(data=data)
@@ -42,9 +43,8 @@ class ModelService(metaclass=Singleton):
                 raise Exception
 
         self.synthesizer.fit(data=data)
-        print("Training completed")
+        logging.info("Training completed")
 
-        print("End of training function")
 
     def generate(self, samples: int) -> DataFrame:
 
@@ -56,15 +56,13 @@ class ModelService(metaclass=Singleton):
         :rtype: pd.Dataframe
         """
 
-        print(f"Starting generating function: n_samples: {samples}")
+        logging.info(f"Starting generating function: n_samples: {samples}")
 
         assert self.synthesizer is not None
 
         synthetic_data = self.synthesizer.sample(num_rows=samples)
 
-        print(f"Generation completed")
-
-        print(synthetic_data)
+        logging.info(f"Generation completed")
 
         return synthetic_data
 
@@ -84,6 +82,8 @@ class ModelService(metaclass=Singleton):
         real_data = pd.read_csv("adult.csv")
         metadata = SingleTableMetadata()
         metadata.detect_from_dataframe(data=real_data)
+
+        logging.info(f"Starting evaluation process: columnn {column_name}")
 
         quality_report = evaluate_quality(
             real_data=real_data,
@@ -105,4 +105,8 @@ class ModelService(metaclass=Singleton):
             metadata=metadata
         )
 
-        return PDFManager.create_pdf(text=recap, image=fig.to_image(format="png", width=700, height=400))
+        pdf_bytes = PDFManager.create_pdf(text=recap, image=fig.to_image(format="png", width=700, height=400))
+
+        logging.info(f"Evaluation process completed.")
+
+        return pdf_bytes
