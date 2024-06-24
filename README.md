@@ -87,9 +87,9 @@ results.
 
 *ctgan-backend* exposes three APIs:
 
-- */train*,  which trains a model using the given data
+- */train*,  which trains a model using the given data. Only .csv files are admitted.
 - */generate*, which generate synthetic data using the previously trained model and download the generated data into a .csv file
-- */evaluate*, which generates an evaluation report given a column and downloads the report in .pdf format
+- */evaluate*, which generates an evaluation report given a column and downloads the report in .pdf format. Again, only .csv files are admitted.
 
 
 ## Known Issues and Limitations
