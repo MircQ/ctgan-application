@@ -79,7 +79,6 @@ class ModelService(metaclass=Singleton):
         assert list(synthetic_data.columns) == list(real_data.columns)
         assert column_name in synthetic_data.columns
 
-        real_data = pd.read_csv("adult.csv")
         metadata = SingleTableMetadata()
         metadata.detect_from_dataframe(data=real_data)
 
